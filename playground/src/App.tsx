@@ -1,5 +1,5 @@
-import { Button, Card, Form, Input } from 'antd'
-import ProFormUpload from '../../src/ProFormUpload'
+import { Button, Card, Form } from 'antd'
+import { ProFormUpload } from '../../src'
 
 function App() {
   return (
@@ -16,9 +16,6 @@ function App() {
           console.log(values)
         }}
       >
-        <Form.Item label="名称" name="name">
-          <Input />
-        </Form.Item>
         <ProFormUpload label="上传文件" name="files" />
         <Button type="primary" htmlType="submit">
           提交
