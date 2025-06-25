@@ -34,6 +34,7 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
+    "docs": "pnpm -F docs docs:dev",
     "format": "prettier -c .",
     "playground": "pnpm -F playground dev",
     "prepublishOnly": "pnpm run build",

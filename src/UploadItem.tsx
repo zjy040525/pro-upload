@@ -1,13 +1,15 @@
+import { FileTextOutlined } from '@ant-design/icons'
 import {
   Card,
   Dropdown,
   Image,
+  Typography,
   version,
   type CardProps,
   type DropDownProps,
   type ImageProps,
 } from 'antd'
-import React from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 
 export interface UploadItemProps extends CardProps {
   /**
@@ -15,24 +17,32 @@ export interface UploadItemProps extends CardProps {
    */
   imgProps?: ImageProps
   /**
+   * @description 除了图片之外的其他文件属性
+   */
+  miscProps?: Partial<{
+    style: React.CSSProperties
+    extra: React.ReactNode
+  }>
+  /**
    * @description 下拉菜单属性
    */
   dropdownProps?: DropDownProps
   /**
    * @description 卡片宽度
    */
-  width?: number
+  width?: number | string
   /**
    * @description 卡片高度
    */
-  height?: number
+  height?: number | string
 }
 
 function UploadItem({
   imgProps,
+  miscProps,
   dropdownProps,
-  width,
-  height,
+  width = 102,
+  height = 102,
   ...props
 }: UploadItemProps) {
   const heightStyle: CardProps = version.startsWith('5')
@@ -52,6 +62,20 @@ function UploadItem({
         },
       }
 
+  const [isImage, setIsImage] = useState(false)
+
+  useLayoutEffect(() => {
+    if (imgProps?.src) {
+      fetch(imgProps.src)
+        .then((r) => r.blob())
+        .then((blob) => {
+          if (blob.type.startsWith('image/')) {
+            setIsImage(true)
+          }
+        })
+    }
+  }, [imgProps])
+
   return (
     <Dropdown
       {...dropdownProps}
@@ -59,13 +83,7 @@ function UploadItem({
         // 1001 is Image default zIndex
         zIndex: 1000,
       }}
-      menu={{
-        ...dropdownProps?.menu,
-        onClick(ev) {
-          ev.domEvent.stopPropagation()
-          dropdownProps?.menu?.onClick?.(ev)
-        },
-      }}
+      menu={dropdownProps?.menu}
     >
       <Card
         {...props}
@@ -75,12 +93,45 @@ function UploadItem({
           height,
           ...props.style,
         }}
-        onClick={(ev) => {
-          ev.stopPropagation()
-          props.onClick?.(ev)
-        }}
       >
-        <Image {...imgProps} />
+        {isImage ? (
+          <Image
+            {...imgProps}
+            wrapperStyle={{
+              width: '100%',
+              height: '100%',
+              ...imgProps?.wrapperStyle,
+            }}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              ...imgProps?.style,
+            }}
+          />
+        ) : (
+          <div
+            style={{
+              ...miscProps?.style,
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onClick={() => {
+              if (!isImage && imgProps?.src) {
+                window.open(imgProps.src, '_blank')
+              }
+            }}
+          >
+            {miscProps?.extra || (
+              <Typography.Text>
+                <FileTextOutlined style={{ fontSize: '200%' }} />
+              </Typography.Text>
+            )}
+          </div>
+        )}
       </Card>
     </Dropdown>
   )

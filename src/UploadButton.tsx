@@ -3,13 +3,34 @@ import { Card, type CardProps, Typography, version } from 'antd'
 import React from 'react'
 
 export interface UploadButtonProps extends CardProps {
+  /**
+   * @description 自定义上传文本
+   */
   extra?: React.ReactNode
+  /**
+   * @description 只读状态下不显示上传交互卡片
+   */
   readonly?: boolean
+  /**
+   * @description 禁用点击交互,禁用移入卡片焦点效果
+   */
   disabled?: boolean
+  /**
+   * @description 最大上传数量
+   */
   maxCount?: number
+  /**
+   * @description 当前上传数量
+   */
   fieldCount?: number
-  width?: number
-  height?: number
+  /**
+   * @description 卡片宽度
+   */
+  width?: number | string
+  /**
+   * @description 卡片高度
+   */
+  height?: number | string
 }
 
 function UploadButton({
@@ -18,8 +39,8 @@ function UploadButton({
   disabled,
   maxCount,
   fieldCount,
-  width,
-  height,
+  width = 102,
+  height = 102,
   ...props
 }: UploadButtonProps) {
   if (

@@ -1,27 +1,22 @@
-import { Button, Card, Form } from 'antd'
-import { ProFormUpload } from '../../src'
+import { Space } from 'antd'
+import BasicUsage from './components/BasicUsage'
+import MaxCount from './components/MaxCount'
 
 function App() {
   return (
-    <Card
-      size="small"
+    <div
       style={{
-        marginBlockStart: 32,
-        marginInline: 'auto',
-        maxWidth: 600,
+        display: 'flex',
+        justifyContent: 'center',
+        gap: 32,
+        paddingBlockStart: 32,
       }}
     >
-      <Form
-        onFinish={(values) => {
-          console.log(values)
-        }}
-      >
-        <ProFormUpload label="上传文件" name="files" />
-        <Button type="primary" htmlType="submit">
-          提交
-        </Button>
-      </Form>
-    </Card>
+      <Space direction="vertical">
+        <BasicUsage />
+        <MaxCount />
+      </Space>
+    </div>
   )
 }
 
