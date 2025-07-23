@@ -1,6 +1,6 @@
 {
   "name": "@zjy040525/pro-upload",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "CCRC上传组件，antd <Upload /> 的封装",
   "keywords": [
     "react",
