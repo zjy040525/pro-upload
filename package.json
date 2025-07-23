@@ -1,7 +1,7 @@
 {
   "name": "@zjy040525/pro-upload",
   "version": "0.2.1",
-  "description": "A starter for creating a React component library.",
+  "description": "CCRC上传组件，antd <Upload /> 的封装",
   "keywords": [
     "react",
     "react-component",
